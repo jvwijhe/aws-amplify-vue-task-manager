@@ -1,6 +1,10 @@
 
 <template>
 <authenticator>
+   <h1 class="text-3xl font-bold underline">
+    Hello world!
+  </h1>
+  
       <input type="text" v-model="name" placeholder="Todo name">
     <input type="text" v-model="description" placeholder="Todo description">
     <select v-model="projectID">
