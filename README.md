@@ -8,7 +8,7 @@ Building a simple app like this is very easy using Amplify. Within a couple of m
 [Demo video on my Twitter](https://twitter.com/jensvanwijhe/status/1539588320317132800)
 
 
-## Amplfiy setup
+## Amplify setup
 ```
 amplify pull  <YOUR_PROJECT_ID>
 ```
