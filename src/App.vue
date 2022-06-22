@@ -1,23 +1,38 @@
 
 <template>
 <authenticator>
-   <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
-  
-      <input type="text" v-model="name" placeholder="Todo name">
-    <input type="text" v-model="description" placeholder="Todo description">
-    <select v-model="projectID">
-      <option v-for="project in projects" :value="project.id" :key="project.id">{{project.name}}</option>
-    </select>
+  <section class="my-12">
+    <div class="container mx-auto">
+    <h1 class="text-3xl font-bold underline">
+      Aws Amplify Task Manager
+    </h1>
+    </div>
+  </section>
 
-    <button v-on:click="storeProject">Create Project</button>
-    <button v-on:click="storeTask">Create Task</button>
-    <ul>
+  <section class="my-12">
+    <div class="container mx-auto bg-gray-100 p-6 rounded flex gap-6">
+      <input type="text" class="p-3 rounded" v-model="name" placeholder="Todo name">
+      <input type="text" class="p-3 rounded" v-model="description" placeholder="Todo description">
+      <select v-model="projectID">
+        <option v-for="project in projects" :value="project.id" :key="project.id">{{project.name}}</option>
+      </select>
+
+    <div class="flex gap-3">
+      <button v-on:click="storeProject" class="bg-blue-500 p-3 rounded text-white">Create Project</button>
+      <button v-on:click="storeTask" class="bg-blue-500 p-3 rounded text-white">Create Task</button>
+    </div>
+    </div>
+  </section>
+
+    <section class="my-12">
+        <div class="container mx-auto">
+    <ul class="grid grid-cols-1 gap-6">
       <li v-for="project in projects" :key="project.id">
         <ProjectListItem :project="project"/> 
         </li>
       </ul>
+        </div>
+    </section>
 
 </authenticator>
 </template>
