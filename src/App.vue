@@ -1,12 +1,15 @@
 
 <template>
 <div class="relative h-screen w-screen bg-gray-50 overflow-y-auto">
-<authenticator>
+<amplify-authenticator>
   <section class="py-12">
-    <div class="container mx-auto max-w-6xl">
+    <div class="container mx-auto max-w-6xl flex justify-between">
     <h1 class="text-3xl font-bold underline">
       Aws Amplify Task Manager
     </h1>
+    <div class="w-24">
+      <amplify-sign-out></amplify-sign-out>
+    </div>
 
     </div>
   </section>
@@ -50,18 +53,17 @@
           </template>
         </div>
     </section>
-
-</authenticator>
+</amplify-authenticator>
 </div>
 </template>
 
-<script >
-import ProjectListItem from '@/components/Project/List/Item/ProjectListItem.vue'
-   import {  useAuthenticator } from '@aws-amplify/ui-vue';
-  import "@aws-amplify/ui-vue/styles.css";
-    import { onMounted, toRefs } from 'vue';
+<script>
 
-  // import { API } from 'aws-amplify';
+
+import ProjectListItem from '@/components/Project/List/Item/ProjectListItem.vue'
+
+    import { onMounted } from 'vue';
+
   import { ref } from '@vue/reactivity';
   import { DataStore } from '@aws-amplify/datastore';
   import { Project } from './models';
@@ -73,7 +75,7 @@ export default {
   },
   setup() {
 
-  const {  user } = toRefs(useAuthenticator());
+
     const projects = ref([]);
     const name = ref();
     const description = ref();
@@ -115,7 +117,7 @@ export default {
      
     }
 
-    return {name, description, projectID, storeProject, user, projects}
+    return {name, description, projectID, storeProject, projects}
   }
 }
   
