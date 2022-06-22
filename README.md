@@ -5,6 +5,9 @@ With this task manager you can create projects and within that project you can c
 Building a simple app like this is very easy using Amplify. Within a couple of minutes you can add authentication, data and storage. All the data is synching in realtime so no need to refresh your page.
 
 
+[Demo video on my Twitter](https://twitter.com/jensvanwijhe/status/1539588320317132800)
+
+
 ## Amplfiy setup
 ```
 amplify pull  <YOUR_PROJECT_ID>
