@@ -1,0 +1,21 @@
+type Comment @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  description: String
+  taskID: ID! @index(name: "byTask")
+}
+
+type Task @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  description: String
+  projectID: ID! @index(name: "byProject")
+  Comments: [Comment] @hasMany(indexName: "byTask", fields: ["id"])
+}
+
+type Project @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  description: String
+  Tasks: [Task] @hasMany(indexName: "byProject", fields: ["id"])
+}
+ 
