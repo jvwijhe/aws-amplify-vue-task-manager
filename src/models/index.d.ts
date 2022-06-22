@@ -32,6 +32,7 @@ export declare class Task {
   readonly description?: string | null;
   readonly projectID: string;
   readonly Comments?: (Comment | null)[] | null;
+  readonly completed?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Task, TaskMetaData>);

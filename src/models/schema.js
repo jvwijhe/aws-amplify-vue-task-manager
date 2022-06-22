@@ -120,6 +120,13 @@ export const schema = {
                         "associatedWith": "taskID"
                     }
                 },
+                "completed": {
+                    "name": "completed",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -254,5 +261,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "3ff489e60417adfa8fd0cee5f9db4784"
+    "version": "585034fce47aca5f0a0133e0f81417d0"
 };

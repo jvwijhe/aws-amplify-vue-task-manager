@@ -88,7 +88,8 @@ export default {
             new Task({
             "name": name.value,
             "description": description.value,
-            "projectID": projectID.value
+            "projectID": projectID.value,
+            "completed": false
             // "startDate":  yourDateStr,
             // "endDate":   yourDateStr,
           })

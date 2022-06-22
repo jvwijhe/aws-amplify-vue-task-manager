@@ -3,7 +3,7 @@
   "serviceConfiguration": {
     "apiName": "taskmanager",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "/tmp/amplify-9777cd0c-ac15-4566-a3b6-5f24e0ce6aa2/amplify/backend/api/taskmanager/schema.graphql",
+    "gqlSchemaPath": "/tmp/amplify-91145be4-5a65-42eb-80ef-3b8dbcd7696c/amplify/backend/api/taskmanager/schema.graphql",
     "defaultAuthType": {
       "mode": "API_KEY",
       "keyDescription": "api key description",

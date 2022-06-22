@@ -10,6 +10,7 @@ type Task @model @auth(rules: [{allow: public}]) {
   description: String
   projectID: ID! @index(name: "byProject")
   Comments: [Comment] @hasMany(indexName: "byTask", fields: ["id"])
+  completed: Boolean
 }
 
 type Project @model @auth(rules: [{allow: public}]) {

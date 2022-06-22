@@ -9,7 +9,19 @@
             <span class="font-bold text-sm text-gray-700">Tasks:</span>
             <ul>
                 <li v-for="task in tasks" :key="task.id">
-                    <span class="text-gray-700 text-sm">{{task.name}}</span>
+                    <button type="button" @click="updateTaskStatus(task)" class="flex items-center">
+                        <template v-if="task.completed">
+                            <span class="text-green-500 inline-block">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                            </span>
+                        </template>
+                        <template v-else>
+                             <span></span>
+                        </template>
+                        <span class="ml-2 text-gray-700 text-sm">{{task.name}}</span>
+                    </button>
                 </li>
             </ul>
         </div>
@@ -19,16 +31,11 @@
     </div>
 </template>
 
-
 <script >
-
-  // import { API } from 'aws-amplify';
     import { onMounted } from 'vue';
-
-  // import { API } from 'aws-amplify';
-  import { ref } from '@vue/reactivity';
-  import { DataStore } from '@aws-amplify/datastore';
-  import { Project, Task } from '../../../../models';
+    import { ref } from '@vue/reactivity';
+    import { DataStore } from '@aws-amplify/datastore';
+    import { Project, Task } from '../../../../models';
 
 export default {
     props: {
@@ -37,23 +44,33 @@ export default {
   setup(props) {
     const tasks = ref([]);
 
- onMounted(async () => {
+        onMounted(async () => {
+            await getTasks();
+            // tasks.value = (await DataStore.query(Task)).filter(t => t.projectID ===  props.project.id);
+        });
 
 
-     tasks.value = (await DataStore.query(Task))
-     .filter(t => t.projectID ===  props.project.id);
-    // console.log(tasks.value)
-    // console.log(props.project)
-    });
+        const getTasks = async () => {
+             tasks.value = (await DataStore.query(Task)).filter(t => t.projectID ===  props.project.id);
+        }
+
+        const deleteProject = async () => {
+            await DataStore.delete(Project, props.project.id);
+        }
+
+        const updateTaskStatus = async (task) => {  
+            const originalTask = await DataStore.query(Task, task.id);
+
+                await DataStore.save(
+                    Task.copyOf(originalTask,updated => {
+                        updated.completed =  !originalTask.completed
+                })
+            );
+             await getTasks();
+      }
 
 
-    const deleteProject = async () => {
-        await DataStore.delete(Project, props.project.id);
-    }
-    
-
-
-    return {tasks, deleteProject}
+    return {tasks, deleteProject, updateTaskStatus }
   }
 
 }
