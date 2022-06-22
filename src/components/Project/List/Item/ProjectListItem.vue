@@ -5,25 +5,34 @@
         
         <p class="text-gray-500">{{project.description}}</p>
 
-        <div class="mt-6" v-if="tasks.length">
-            <span class="font-bold text-sm text-gray-700">Tasks:</span>
-            <ul>
-                <li v-for="task in tasks" :key="task.id">
-                    <button type="button" @click="updateTaskStatus(task)" class="flex items-center">
-                        <template v-if="task.completed">
-                            <span class="text-green-500 inline-block">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                        </svg>
-                            </span>
-                        </template>
-                        <template v-else>
-                             <span></span>
-                        </template>
-                        <span class="ml-2 text-gray-700 text-sm">{{task.name}}</span>
-                    </button>
-                </li>
-            </ul>
+        <div class="w-full">
+            <div class="flex gap-3 my-3">
+             <input type="text" class="p-3 rounded" v-model="name" placeholder="Todo name">
+            <input type="text" class="p-3 rounded" v-model="description" placeholder="Todo description">
+            <button v-on:click="storeTask" class="bg-blue-500 p-3 rounded text-white text-sm">Create Task</button>
+            </div>
+
+
+            <div class="mt-6" v-if="tasks.length">
+                <span class="font-bold text-sm text-gray-700">Tasks:</span>
+                <ul>
+                    <li v-for="task in tasks" :key="task.id">
+                        <button type="button" @click="updateTaskStatus(task)" class="flex items-center">
+                            <template v-if="task.completed">
+                                <span class="text-green-500 inline-block">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                            </svg>
+                                </span>
+                            </template>
+                            <template v-else>
+                                <span></span>
+                            </template>
+                            <span class="ml-2 text-gray-700 text-sm">{{task.name}}</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="mt-3">
             <button type="button" @click="deleteProject" class="text-red-500 font-semibold">Delete</button>
@@ -42,7 +51,9 @@ export default {
         project: Object
     },
   setup(props) {
-    const tasks = ref([]);
+        const tasks = ref([]);
+        const name = ref();
+        const description = ref();
 
         onMounted(async () => {
             await getTasks();
@@ -69,8 +80,25 @@ export default {
              await getTasks();
       }
 
+        const storeTask = async() => {
+            try {
+                await DataStore.save(
+                    new Task({
+                    "name": name.value,
+                    "description": description.value,
+                    "projectID": props.project.id,
+                    "completed": false
+                })
+                );
+                await getTasks()
+            } catch (error) {
+                console.log(error)
+            }
+    }
 
-    return {tasks, deleteProject, updateTaskStatus }
+
+
+    return {tasks,name,description, deleteProject, updateTaskStatus, storeTask }
   }
 
 }
